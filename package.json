@@ -1,0 +1,47 @@
+{
+  "name": "cartao-de-ponto-pt-dados",
+  "version": "1.0.0",
+  "description": "Cartão de Ponto: o PT em dados, 1982–2026. Projeto independente de João Pedro.",
+  "private": true,
+  "type": "module",
+  "author": "João Pedro",
+  "license": "UNLICENSED",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "build:single": "vite build --mode single",
+    "build:artifact": "vite build --mode artifact",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "data": "python etl/derive.py",
+    "etl": "python etl/run.py",
+    "audit:data": "python etl/audit.py",
+    "test:etl": "python -m unittest discover -s tests -p \"*_test.py\"",
+    "check": "npm test && npm run test:etl && npm run audit:data && npm run build",
+    "video": "node video/render.cjs video/cartao-de-ponto.mp4"
+  },
+  "dependencies": {
+    "@fontsource-variable/archivo": "^5.3.0",
+    "@fontsource-variable/doto": "^5.3.0",
+    "@fontsource-variable/martian-mono": "^5.3.0",
+    "d3-array": "^3.2.4",
+    "d3-scale": "^4.0.2",
+    "d3-shape": "^3.2.0",
+    "sql.js": "^1.15.2"
+  },
+  "devDependencies": {
+    "@types/d3-array": "^3.2.2",
+    "@types/d3-scale": "^4.0.9",
+    "@types/d3-shape": "^3.2.0",
+    "@types/sql.js": "^1.4.11",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5",
+    "vite-plugin-singlefile": "^2.3.4",
+    "vitest": "^5.0.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jotape2709/PT-DATA.git"
+  },
+  "homepage": "https://github.com/jotape2709/PT-DATA#readme"
+}

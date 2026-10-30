@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#120E0D" />
+    <meta name="author" content="João Pedro" />
+    <meta name="description" content="O PT em dados, 1982–2026: dez eleições presidenciais, a bancada na Câmara, a federação por estado em 2026 e como os deputados votaram entre out/2025 e out/2026. Projeto independente de João Pedro." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Cartão de Ponto · o PT em dados, 1982–2026" />
+    <meta property="og:description" content="Eleições, bancada, mapa de 2026 e votações nominais, com método aberto e SQL no navegador. Por João Pedro." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>Cartão de Ponto · o PT em dados, 1982–2026</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-50 -50 100 100'%3E%3Crect x='-50' y='-50' width='100' height='100' rx='12' fill='%23C8161D'/%3E%3Cpolygon fill='%23F2B705' points='0,-38 9,-12.4 36.5,-11.8 14.6,4.7 22.6,31 0,15.4 -22.6,31 -14.6,4.7 -36.5,-11.8 -9,-12.4'/%3E%3C/svg%3E" />
+  </head>
+  <body>
+    <a class="skip" href="#presidencia">Pular para os dados</a>
+
+    <header class="bar" data-bar>
+      <a class="bar__brand" href="#topo" aria-label="Cartão de Ponto, início">
+        <svg class="bar__star" viewBox="-50 -50 100 100" aria-hidden="true"><polygon points="0,-48 11.3,-15.5 45.6,-14.8 18.3,5.9 28.2,38.8 0,19.2 -28.2,38.8 -18.3,5.9 -45.6,-14.8 -11.3,-15.5" /></svg>
+        <span class="bar__name">Cartão de Ponto</span>
+        <span class="bar__sub">o PT em dados</span>
+      </a>
+      <nav class="bar__nav" aria-label="Seções">
+        <a href="#presidencia">Presidência</a>
+        <a href="#camara">Câmara</a>
+        <a href="#virada">Virada</a>
+        <a href="#mapa">Mapa 2026</a>
+        <a href="#plenario">Plenário</a>
+        <a href="#laboratorio">SQL</a>
+        <a href="#metodo">Método</a>
+      </nav>
+      <div class="bar__progress" aria-hidden="true"><span data-progress></span></div>
+    </header>
+
+    <main class="card" id="topo">
+      <div class="perf" aria-hidden="true"></div>
+
+      <!-- Cabeçalho do cartão: cartaz + campos pré-impressos preenchidos com dados -->
+      <section class="head" aria-labelledby="titulo">
+        <div class="head__title">
+          <p class="label">Cartão de ponto · registro de presença nas urnas e no plenário</p>
+          <h1 id="titulo"><span class="h1__a">O PT</span> <span class="h1__b">em dados</span></h1>
+        </div>
+        <div class="wedge" aria-hidden="true" data-wedge>
+          <svg class="wedge__star" viewBox="-50 -50 100 100"><polygon points="0,-48 11.3,-15.5 45.6,-14.8 18.3,5.9 28.2,38.8 0,19.2 -28.2,38.8 -18.3,5.9 -45.6,-14.8 -11.3,-15.5" /></svg>
+          <span class="wedge__years"><span>1982</span><span>2026</span></span>
+        </div>
+        <dl class="head__fields">
+          <div class="field"><dt>Empregador</dt><dd>Partido dos Trabalhadores</dd></div>
+          <div class="field"><dt>Nº TSE</dt><dd><span class="stamp stamp--ink" data-stamp>13</span></dd></div>
+          <div class="field"><dt>Fundação</dt><dd data-fundacao>10/02/1980 · Colégio Sion, SP</dd></div>
+          <div class="field"><dt>Período</dt><dd>12 eleições para a Câmara · 10 para a Presidência</dd></div>
+        </dl>
+      </section>
+
+      <!-- 1 · Presidência: o próprio cartão -->
+      <section id="presidencia" class="sheet sheet--log" aria-labelledby="h-presidencia">
+        <div class="sheet__meta"><span class="label">1989 → 2026</span><span class="label label--soft">Presidência · votos válidos</span></div>
+        <div class="log-wrap">
+          <div class="log" role="table" aria-labelledby="h-presidencia" data-log></div>
+          <aside class="thesis" data-thesis>
+            <h2 id="h-presidencia" class="thesis__title"></h2>
+            <p class="thesis__lede"></p>
+            <div class="thesis__stats" data-thesis-stats></div>
+            <button class="btn btn--ghost" type="button" data-replay>Carimbar de novo</button>
+          </aside>
+        </div>
+        <p class="source" data-source="presidencia"></p>
+      </section>
+
+      <!-- 2 · Câmara -->
+      <section id="camara" class="sheet" aria-labelledby="h-camara">
+        <div class="sheet__meta"><span class="label">1982 → 2026</span><span class="label label--soft">Câmara dos Deputados · eleitos</span></div>
+        <header class="sheet__head">
+          <h2 id="h-camara" data-h="camara"></h2>
+          <p class="lede" data-lede="camara"></p>
+        </header>
+        <figure class="fig">
+          <div class="tally" data-tally role="img"></div>
+          <figcaption class="legend">
+            <span><i class="dot dot--pt"></i>uma cadeira</span>
+            <span class="muted" data-tally-note></span>
+          </figcaption>
+        </figure>
+        <p class="source" data-source="camara"></p>
+      </section>
+
+      <!-- 3 · A virada -->
+      <section id="virada" class="sheet" aria-labelledby="h-virada">
+        <div class="sheet__meta"><span class="label">4 out → 25 out</span><span class="label label--soft">Segundos turnos · 1989–2026</span></div>
+        <header class="sheet__head">
+          <h2 id="h-virada" data-h="virada"></h2>
+          <p class="lede" data-lede="virada"></p>
+        </header>
+        <div class="split">
+          <figure class="fig fig--slope">
+            <svg class="slope" data-slope role="img" aria-labelledby="h-virada"></svg>
+            <figcaption class="legend">
+              <span><i class="line line--pt"></i>2026</span>
+              <span><i class="line line--ink"></i>outros segundos turnos</span>
+              <span><i class="line line--dash"></i>saiu em 2º no 1º turno</span>
+            </figcaption>
+          </figure>
+          <div class="ledger" data-ledger></div>
+        </div>
+        <p class="source" data-source="virada"></p>
+      </section>
+
+      <!-- 4 · Mapa 2026 -->
+      <section id="mapa" class="sheet" aria-labelledby="h-mapa">
+        <div class="sheet__meta"><span class="label">4 out 2026</span><span class="label label--soft">Câmara · Federação PT/PCdoB/PV por UF</span></div>
+        <header class="sheet__head">
+          <h2 id="h-mapa" data-h="mapa"></h2>
+          <p class="lede" data-lede="mapa"></p>
+        </header>
+        <div class="seg" role="radiogroup" aria-label="Medida do mapa" data-metric>
+          <button type="button" role="radio" aria-checked="true" data-m="share">% dos votos válidos</button>
+          <button type="button" role="radio" aria-checked="false" data-m="seats">cadeiras no modelo</button>
+          <button type="button" role="radio" aria-checked="false" data-m="next">votos para a próxima cadeira</button>
+        </div>
+        <div class="mapgrid">
+          <figure class="fig">
+            <div class="tiles" data-tiles role="group" aria-label="Unidades federativas"></div>
+            <figcaption class="legend" data-map-legend></figcaption>
+          </figure>
+          <div class="ufpanel" data-ufpanel aria-live="polite"></div>
+        </div>
+        <div class="rank" data-rank></div>
+        <p class="source" data-source="mapa"></p>
+      </section>
+
+      <!-- 5 · Plenário -->
+      <section id="plenario" class="sheet" aria-labelledby="h-plenario">
+        <div class="sheet__meta"><span class="label" data-window>out/2025 → out/2026</span><span class="label label--soft">Plenário · votações nominais</span></div>
+        <header class="sheet__head">
+          <h2 id="h-plenario" data-h="plenario"></h2>
+          <p class="lede" data-lede="plenario"></p>
+        </header>
+        <div class="kpis" data-kpis></div>
+
+        <h3 class="subhead">Com que frequência cada partido votou como a maioria do PT</h3>
+        <figure class="fig">
+          <svg class="dots" data-agree role="img" aria-label="Concordância de cada partido com a maioria do PT"></svg>
+          <figcaption class="legend">
+            <span>Tamanho do ponto: deputados na janela</span>
+            <span class="muted">Só votações em que as duas maiorias são definidas (sem empate).</span>
+          </figcaption>
+        </figure>
+
+        <div class="finder" data-finder>
+          <label class="finder__field">
+            <span class="label">Encontre um deputado</span>
+            <input type="search" list="deputados" data-find placeholder="Digite um nome, como Erika Hilton ou Nikolas Ferreira" autocomplete="off" spellcheck="false" />
+          </label>
+          <datalist id="deputados" data-list></datalist>
+          <div class="finder__card" data-profile aria-live="polite">
+            <p class="note">O perfil mostra a posição no eixo, quanto a pessoa votou como a maioria do PT e a presença. A coluna dela fica marcada em ouro no cartão abaixo e no gráfico de faixas.</p>
+          </div>
+        </div>
+
+        <h3 class="subhead" id="h-punch">O cartão perfurado do plenário</h3>
+        <p class="note">Cada coluna é um deputado, ordenado pela posição estimada no eixo que mais separa os votos. Cada linha é uma votação. Furo vermelho é Sim, furo preto é Não, sem furo é ausência. Na ordem por ponto de corte, vêm primeiro as votações em que o lado do PT votou Sim e depois aquelas em que votou Não; a escada que se forma é a marca de um plenário que vota quase sempre ao longo de um só eixo.</p>
+        <div class="punch-tools">
+          <div class="seg" role="radiogroup" aria-label="Ordem das votações" data-punch-sort>
+            <button type="button" role="radio" aria-checked="true" data-s="cut">ordenar por ponto de corte</button>
+            <button type="button" role="radio" aria-checked="false" data-s="date">ordenar por data</button>
+          </div>
+          <label class="select">
+            <span class="label">destacar partido</span>
+            <select data-punch-party></select>
+          </label>
+        </div>
+        <figure class="fig punch" data-punch aria-labelledby="h-punch">
+          <div class="punch__axis" data-punch-axis></div>
+          <div class="punch__frame">
+            <canvas class="punch__canvas" data-punch-canvas role="img" aria-label="Matriz de votos: deputados nas colunas, votações nas linhas"></canvas>
+          </div>
+          <figcaption class="legend">
+            <span><i class="hole hole--s"></i>Sim</span>
+            <span><i class="hole hole--n"></i>Não ou obstrução</span>
+            <span><i class="hole hole--a"></i>Abstenção</span>
+            <span><i class="hole hole--x"></i>Ausente</span>
+            <span><i class="tab-pt"></i>deputado do PT</span>
+          </figcaption>
+        </figure>
+        <div class="model" data-model></div>
+
+        <h3 class="subhead" id="h-eixo">Onde cada partido fica no eixo</h3>
+        <p class="note">Cada ponto é um deputado na posição estimada pelo modelo; o traço é a mediana do partido. Partidos com dois ou mais deputados, ordenados pela mediana.</p>
+        <figure class="fig">
+          <svg class="strip" data-strip role="img" aria-labelledby="h-eixo"></svg>
+          <figcaption class="legend">
+            <span><i class="dot dot--pt"></i>deputado do PT</span>
+            <span><i class="dot dot--ink"></i>demais deputados</span>
+            <span><i class="dot dot--gold"></i>deputado buscado</span>
+            <span class="muted">Eixo em desvios-padrão; o sinal só indica o lado.</span>
+          </figcaption>
+        </figure>
+
+        <h3 class="subhead">As votações que mais dividiram a bancada</h3>
+        <ol class="divisive" data-divisive></ol>
+        <p class="source" data-source="plenario"></p>
+      </section>
+
+      <!-- 6 · Laboratório SQL -->
+      <section id="laboratorio" class="sheet" aria-labelledby="h-lab">
+        <div class="sheet__meta"><span class="label">SQLite no navegador</span><span class="label label--soft">Laboratório</span></div>
+        <header class="sheet__head">
+          <h2 id="h-lab">Consulte as bases com SQL, sem instalar nada</h2>
+          <p class="lede">As seis tabelas do projeto carregam em um SQLite que roda nesta página. Escolha uma consulta pronta ou escreva a sua; o resultado pode ser baixado em CSV.</p>
+        </header>
+        <div class="lab" data-lab>
+          <div class="lab__side">
+            <p class="label">Consultas prontas</p>
+            <div class="lab__presets" data-presets></div>
+            <p class="label">Tabelas</p>
+            <ul class="lab__schema" data-schema></ul>
+          </div>
+          <div class="lab__main">
+            <label class="sr-only" for="sql">Consulta SQL</label>
+            <textarea id="sql" class="lab__editor" spellcheck="false" data-sql></textarea>
+            <div class="lab__actions">
+              <button class="btn" type="button" data-run>Executar consulta</button>
+              <span class="hint">Ctrl + Enter</span>
+              <button class="btn btn--ghost" type="button" data-csv disabled>Baixar CSV</button>
+              <span class="lab__status" data-status aria-live="polite">O SQLite carrega quando você chegar aqui.</span>
+            </div>
+            <div class="lab__out" data-out></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7 · Método -->
+      <section id="metodo" class="sheet" aria-labelledby="h-metodo">
+        <div class="sheet__meta"><span class="label">Fontes, recortes, limites</span><span class="label label--soft">Método</span></div>
+        <header class="sheet__head">
+          <h2 id="h-metodo">Como cada número foi feito</h2>
+          <p class="lede">Os dados vêm do TSE e da API de Dados Abertos da Câmara. Nada aqui é previsão; os modelos descrevem o período e dizem quanto acertam.</p>
+        </header>
+        <div class="lineage" data-lineage></div>
+        <div class="method" data-method></div>
+        <div class="quality" data-quality></div>
+        <div class="downloads" data-downloads></div>
+      </section>
+
+      <footer class="foot">
+        <div class="foot__sign">
+          <p class="label">Assinatura</p>
+          <p class="foot__name">João Pedro</p>
+          <p class="foot__role">dados, código, design e motion</p>
+        </div>
+        <div class="foot__links">
+          <a class="foot__gh" href="https://github.com/jotape2709" target="_blank" rel="noopener">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            <span>github.com/jotape2709</span>
+          </a>
+          <p class="muted">Código, ETL e testes: <a href="https://github.com/jotape2709/PT-DATA" target="_blank" rel="noopener" style="color:var(--gold)">jotape2709/PT-DATA</a></p>
+        </div>
+        <div class="foot__note">
+          <p><strong>Cartão de Ponto</strong> é um projeto independente, sem vínculo com o Partido dos Trabalhadores, a Câmara dos Deputados ou o TSE.</p>
+          <p class="muted" data-built></p>
+        </div>
+      </footer>
+    </main>
+
+    <div class="tip" role="tooltip" data-tip hidden></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

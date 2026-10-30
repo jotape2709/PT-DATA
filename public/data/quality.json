@@ -1,0 +1,49 @@
+{
+ "scope": "Consistência interna dos snapshots; não certifica registros contra as fontes oficiais.",
+ "checkedAt": "2026-10-30T20:09:26+00:00",
+ "passed": true,
+ "crossFileChecks": [
+  "Modelo de cadeiras: 84 para a federação vs 88 reais em 2026 (diferença -4)",
+  "Modelo de cadeiras dentro da tolerância de 8 cadeiras do resultado oficial"
+ ],
+ "datasets": [
+  {
+   "file": "historico.json",
+   "sha256": "54d2a88debea1a42e956ef1f23477110dddb61c238b3bc968dbcfcdb08637d46",
+   "bytes": 6913,
+   "checks": [
+    "10 eleições presidenciais desde 1989",
+    "anos presidenciais únicos e em ordem",
+    "percentuais do 2º turno conciliados com os votos dos dois finalistas",
+    "resultado de cada eleição coerente com o percentual de votos válidos",
+    "Câmara: 12 eleições com cadeiras dentro do total da Casa",
+    "toda linha da série cita uma fonte https"
+   ]
+  },
+  {
+   "file": "listas_2026.json",
+   "sha256": "b88be68c94d1bc30ce1242913c7e271024e093ae82e6e6c88a297f97361f2986",
+   "bytes": 9709,
+   "checks": [
+    "27 unidades federativas presentes",
+    "513 cadeiras distribuídas pelas 27 UFs",
+    "lista-alvo (Federação PT/PC do B/PV) presente nas 27 UFs",
+    "soma das listas conciliada com os votos válidos de 2026 em cada UF",
+    "modelo de cadeiras reproduzido na auditoria e fechando o total de cada UF"
+   ]
+  },
+  {
+   "file": "plenario.json",
+   "sha256": "dde461fcbeb1bc1f151921143a22fe77c580bc8adba184325ce90690f0d511e3",
+   "bytes": 236519,
+   "checks": [
+    "574 deputados na janela",
+    "ids de deputados únicos",
+    "todo deputado tem UF válida e partido",
+    "269 votações nominais com id único",
+    "cada votação tem uma marca por deputado, data ISO dentro da janela",
+    "toda votação tem ao menos 200 votos registrados (mínimo 291)"
+   ]
+  }
+ ]
+}
