@@ -62,6 +62,7 @@ O Partido dos Trabalhadores nasceu das greves do ABC e foi fundado em 10/02/1980
 
 | Seção | Pergunta | Visualização |
 | --- | --- | --- |
+| **Introdução** | (abertura, 4 s, pulável) | o portão da fábrica se abre sobre o cartão: cunha vermelha, engrenagem e estrela, o lema “Trabalhadores de todos os países, uni-vos!” (Manifesto Comunista, 1848) e o carimbo 1980 → 2026; toca uma vez por sessão e é ignorada com `prefers-reduced-motion` (`?nointro` também pula) |
 | **Presidência** | Como o PT terminou cada eleição desde 1989? | o próprio cartão: 1º e 2º turno carimbados, linha dos 50% |
 | **Câmara** | Quantos deputados o PT elegeu em cada pleito? | gráfico de unidades: um ponto por cadeira |
 | **Virada** | O que mudou do 1º para o 2º turno? | slopegraph de 8 segundos turnos e tabela de ganhos |

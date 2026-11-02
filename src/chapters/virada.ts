@@ -143,9 +143,9 @@ function drawLedger(runs: Presidencia[], focus: Presidencia) {
       const g = p.ganhoEntreTurnos!;
       const mg = p.margemTurno2;
       return `<tr class="${p === focus ? 'is-focus' : ''}">
-        <td>${p.ano}</td><td>${p.turno1.posicao}º · ${dec2(p.turno1.pct)}</td><td>${dec2(p.turno2!.pct)}</td>
-        <td>${signed(g.pontos)}</td><td>${g.votos >= 0 ? '+' : '−'}${millions(Math.abs(g.votos))}</td>
-        <td>${mg ? signed(mg.pontos) : '—'}</td>
+        <td>${p.ano}</td><td data-label="1º turno">${p.turno1.posicao}º · ${dec2(p.turno1.pct)}</td><td data-label="2º turno">${dec2(p.turno2!.pct)}</td>
+        <td data-label="Ganho p.p.">${signed(g.pontos)}</td><td data-label="Ganho votos">${g.votos >= 0 ? '+' : '−'}${millions(Math.abs(g.votos))}</td>
+        <td data-label="Margem final">${mg ? signed(mg.pontos) : '—'}</td>
       </tr>`;
     })
     .join('');

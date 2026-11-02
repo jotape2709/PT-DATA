@@ -10,6 +10,7 @@ import { renderMetodo } from './chapters/metodo';
 import { fitIrtAsync } from './engine/irt-client';
 import { computeCohesion } from './engine/cohesion';
 import { stampOnEnter } from './core/motion';
+import { playIntro } from './core/intro';
 
 document.documentElement.classList.add('js');
 
@@ -40,11 +41,13 @@ for (const [name, fn] of chapters) {
 
 // Abertura: a cunha vermelha corta o cartão, a estrela gira e os campos são carimbados.
 const head = document.querySelector<HTMLElement>('.head')!;
-requestAnimationFrame(() => {
-  head.classList.add('is-in');
-  head.querySelector('[data-wedge]')!.classList.add('is-in');
+playIntro().then(() => {
+  requestAnimationFrame(() => {
+    head.classList.add('is-in');
+    head.querySelector('[data-wedge]')!.classList.add('is-in');
+  });
+  stampOnEnter(head);
 });
-stampOnEnter(head);
 
 // Navigation: highlight the section in view and fill the progress bar.
 const links = [...document.querySelectorAll<HTMLAnchorElement>('.bar__nav a')];
