@@ -1,42 +1,47 @@
-import { reducedMotion } from './motion';
-
 const KEY = 'cartao-intro-visto';
-const TOTAL = 4300; // ms até as metades do portão começarem a abrir
+const TOTAL = 4300; // ms desde o início do carregamento até o portão abrir
 
 /**
- * Introdução: o portão da fábrica se abre sobre o cartão. Toca uma vez por
- * sessão, pode ser pulada (botão, clique, Esc ou Enter) e é ignorada com
- * prefers-reduced-motion. Resolve quando o site já está visível.
+ * Introdução: o portão da fábrica se abre sobre o cartão.
+ * Um script no <head> decide antes do primeiro quadro se ela toca
+ * (classe `intro-on` em <html>), então ela aparece imediatamente, sem
+ * esperar este módulo. Aqui só tratamos o fim: tempo, pular, limpeza.
  */
 export function playIntro(): Promise<void> {
+  const html = document.documentElement;
   const el = document.querySelector<HTMLElement>('[data-intro]');
-  let seen = false;
-  try { seen = sessionStorage.getItem(KEY) === '1'; } catch { /* sandbox sem storage */ }
-  if (!el || reducedMotion || seen || new URLSearchParams(location.search).has('nointro')) return Promise.resolve();
-
+  if (!el || !html.classList.contains('intro-on')) {
+    el?.remove();
+    return Promise.resolve();
+  }
   return new Promise((resolve) => {
     let done = false;
-    const html = document.documentElement;
-    html.style.overflow = 'hidden';
-    el.classList.add('intro--on');
-    requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('intro--play')));
-
     const finish = () => {
       if (done) return;
       done = true;
       clearTimeout(timer);
-      try { sessionStorage.setItem(KEY, '1'); } catch { /* ignore */ }
+      try { sessionStorage.setItem(KEY, '1'); } catch { /* sandbox sem storage */ }
       el.classList.add('intro--out');
-      resolve(); // a abertura do cartão começa junto com o portão
+      html.classList.add('intro-done'); // libera a rolagem enquanto o portão abre
+      resolve();
       window.setTimeout(() => {
         el.remove();
-        html.style.overflow = '';
+        html.classList.remove('intro-on', 'intro-done');
       }, 950);
       window.removeEventListener('keydown', onKey);
     };
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') finish(); };
-    const timer = window.setTimeout(finish, TOTAL);
+    // As animações CSS começaram no primeiro quadro: desconta o tempo já passado.
+    const timer = window.setTimeout(finish, Math.max(300, TOTAL - performance.now()));
     el.addEventListener('click', finish);
     window.addEventListener('keydown', onKey);
   });
 }
+
+/** Voltar pelo histórico (bfcache) não deve reabrir a introdução. */
+window.addEventListener('pageshow', (e) => {
+  if (e.persisted) {
+    document.documentElement.classList.remove('intro-on');
+    document.querySelector('[data-intro]')?.remove();
+  }
+});

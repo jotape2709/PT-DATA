@@ -12,6 +12,16 @@
     <meta name="twitter:card" content="summary_large_image" />
     <title>Cartão de Ponto · o PT em dados, 1982–2026</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-50 -50 100 100'%3E%3Crect x='-50' y='-50' width='100' height='100' rx='12' fill='%23C8161D'/%3E%3Cpolygon fill='%23F2B705' points='0,-38 9,-12.4 36.5,-11.8 14.6,4.7 22.6,31 0,15.4 -22.6,31 -14.6,4.7 -36.5,-11.8 -9,-12.4'/%3E%3C/svg%3E" />
+    <script>
+      /* Decide antes do primeiro quadro se a introdução toca, para ela não "pular" depois do site. */
+      (function () {
+        try {
+          var d = document.documentElement;
+          var skip = /[?&]nointro\b/.test(location.search) || matchMedia('(prefers-reduced-motion: reduce)').matches || sessionStorage.getItem('cartao-intro-visto') === '1';
+          if (!skip) d.classList.add('intro-on');
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div class="intro" data-intro aria-hidden="true">
@@ -41,14 +51,18 @@
         <span class="bar__name">Cartão de Ponto</span>
         <span class="bar__sub">o PT em dados</span>
       </a>
-      <nav class="bar__nav" aria-label="Seções">
-        <a href="#presidencia">Presidência</a>
-        <a href="#camara">Câmara</a>
-        <a href="#virada">Virada</a>
-        <a href="#mapa">Mapa 2026</a>
-        <a href="#plenario">Plenário</a>
-        <a href="#laboratorio">SQL</a>
-        <a href="#metodo">Método</a>
+      <button class="bar__toggle" type="button" aria-expanded="false" aria-controls="secoes" data-nav-toggle>
+        <span class="bar__here" data-here>Seções</span>
+        <svg class="bar__chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5 11 1.5" /></svg>
+      </button>
+      <nav class="bar__nav" id="secoes" aria-label="Seções" data-nav>
+        <a href="#presidencia"><span class="bar__lbl">Presidência</span><span class="bar__desc">10 eleições, 1º e 2º turno</span></a>
+        <a href="#camara"><span class="bar__lbl">Câmara</span><span class="bar__desc">bancada eleita, 1982–2026</span></a>
+        <a href="#virada"><span class="bar__lbl">Virada</span><span class="bar__desc">os 8 segundos turnos</span></a>
+        <a href="#mapa"><span class="bar__lbl">Mapa 2026</span><span class="bar__desc">federação por UF</span></a>
+        <a href="#plenario"><span class="bar__lbl">Plenário</span><span class="bar__desc">quem vota com o PT</span></a>
+        <a href="#laboratorio"><span class="bar__lbl">SQL</span><span class="bar__desc">consulte as bases</span></a>
+        <a href="#metodo"><span class="bar__lbl">Método</span><span class="bar__desc">fontes e limites</span></a>
       </nav>
       <div class="bar__progress" aria-hidden="true"><span data-progress></span></div>
     </header>
